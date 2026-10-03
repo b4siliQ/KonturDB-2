@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.b4siliq.presentation.controllers.KonturMainController">
+   <children>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="800.0" prefWidth="350.0" HBox.hgrow="NEVER">
+         <children>
+            <GridPane hgap="3.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="searchConfigButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSearchConfigurationPopupAction" text="🔧" />
+                  <Button fx:id="addNewComponentButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewComponentAction" text="✏️" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Noto Sans Symbols Regular" size="13.0" />
+                     </font></Button>
+                  <Label fx:id="searchParameterLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Компоненты: По Имени" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
+            <GridPane hgap="3.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="searchLogoLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="🔎" GridPane.rowIndex="1" />
+                  <Button fx:id="searchButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#searchAction" text="✔️" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="searchTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
+            <ListView fx:id="componentListView" maxHeight="1.7976931348623157E308" onMouseClicked="#getComponentCellAction" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <VBox HBox.hgrow="ALWAYS">
+         <children>
+            <GridPane hgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="datasheetButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openDatasheetAction" text="Открыть Datasheet" GridPane.columnIndex="3" />
+                  <Button fx:id="updateComponentButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateComponentAction" text="🏷️" GridPane.columnIndex="2" />
+                  <Button fx:id="setFavoriteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setFavoriteComponentAction" text="⭐" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
+            <ScrollPane fx:id="browserScrollPane" fitToWidth="true" hbarPolicy="NEVER" hmin="1.0" visible="false" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="nameLabel" maxWidth="1.7976931348623157E308" text="STM 120">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="25.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Science Gothic Regular" size="48.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="specificationLabel" maxWidth="1.7976931348623157E308" text="Микропроцессор">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="15.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Lora Italic" size="24.0" />
+                           </font>
+                        </Label>
+                        <StackPane maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="15.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <Label fx:id="staticPriceLabel" maxWidth="1.7976931348623157E308" text="Цена">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="15.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="PT Serif Caption" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="priceLabel" maxWidth="1.7976931348623157E308" text="Label">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="PT Serif Caption" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="staticQuantityLabel" maxWidth="1.7976931348623157E308" text="Количество">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="15.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="quantityLabel" maxWidth="1.7976931348623157E308" text="Label">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="staticBoxLabel" maxWidth="1.7976931348623157E308" text="Ящик">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="15.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="boxLabel" maxWidth="1.7976931348623157E308" text="Label">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="staticDescriptionLabel" maxWidth="1.7976931348623157E308" text="Описание">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="15.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextFlow fx:id="descriptionTextFlow" prefHeight="200.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="5.0" />
+                           </VBox.margin>
+                        </TextFlow>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</HBox>
