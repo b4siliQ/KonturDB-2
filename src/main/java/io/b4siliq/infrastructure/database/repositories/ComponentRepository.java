@@ -8,12 +8,12 @@ import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.b4siliq.application.contracts.SearchColumnEnum;
 import io.b4siliq.application.dtos.NewComponentDto;
 import io.b4siliq.application.dtos.UpdatedComponentDto;
 import io.b4siliq.domain.entities.Component;
 import io.b4siliq.infrastructure.database.abstracts.GenericRepository;
 import io.b4siliq.infrastructure.database.contracts.DatabaseConnector;
-import io.b4siliq.infrastructure.database.enums.SearchColumnEnum;
 import io.b4siliq.infrastructure.database.exceptions.TableOperationException;
 
 public class ComponentRepository extends GenericRepository<Component> {
@@ -93,7 +93,6 @@ public class ComponentRepository extends GenericRepository<Component> {
         }, super.getExecutor());
     }
 
-    @Override
     public CompletableFuture<Void> addAsync(NewComponentDto dto) {
         return CompletableFuture.runAsync(() -> {
             var request = """
@@ -224,7 +223,6 @@ public class ComponentRepository extends GenericRepository<Component> {
         }, super.getExecutor());
     }
 
-    @Override
     public CompletableFuture<Void> addRangeByDtoAsync(Collection<NewComponentDto> range) {
         return CompletableFuture.runAsync(() -> {
             var request = """
@@ -344,7 +342,6 @@ public class ComponentRepository extends GenericRepository<Component> {
         }, super.getExecutor());
     }
 
-    @Override
     public CompletableFuture<Void> updateAsync(UpdatedComponentDto dto) {
         return CompletableFuture.runAsync(() -> {
             var request = """

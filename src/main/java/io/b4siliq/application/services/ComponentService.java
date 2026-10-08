@@ -6,11 +6,11 @@ import java.util.concurrent.CompletableFuture;
 
 import io.b4siliq.application.dtos.NewComponentDto;
 import io.b4siliq.application.dtos.UpdatedComponentDto;
+import io.b4siliq.application.enums.SearchComponentColumnEnum;
 import io.b4siliq.application.validators.ComponentDtoValidator;
 import io.b4siliq.application.validators.ComponentValidator;
 import io.b4siliq.application.validators.UpdatedComponentDtoValidator;
 import io.b4siliq.domain.entities.Component;
-import io.b4siliq.infrastructure.database.enums.SearchColumnEnum;
 import io.b4siliq.infrastructure.database.repositories.ComponentRepository;
 
 public class ComponentService {
@@ -51,7 +51,7 @@ public class ComponentService {
         return this.repo.updateAsync(dto);
     }
 
-    public CompletableFuture<Collection<Component>> searchService(SearchColumnEnum column, String searchTerm) {
+    public CompletableFuture<Collection<Component>> searchService(SearchComponentColumnEnum column, String searchTerm) {
         return this.repo.searchAsync(column, searchTerm);
     }
 
