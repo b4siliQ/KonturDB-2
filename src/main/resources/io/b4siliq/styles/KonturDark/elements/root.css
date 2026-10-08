@@ -1,0 +1,285 @@
+@font-face {
+    font-family: 'FiraSans';
+    src: url('../../../fonts/FiraSans.ttf');
+}
+
+@font-face {
+    font-family: 'IBMPlex';
+    src: url('../../../fonts/IBMPlexSerif.ttf');
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('../../../fonts/LoraItalic.ttf');
+}
+
+@font-face {
+    font-family: 'NotoEmoji';
+    src: url('../../../fonts/NotoEmoji.ttf');
+}
+
+@font-face {
+    font-family: 'ScienceGothic';
+    src: url('../../../fonts/ScienceGothic.ttf');
+}
+
+.root {
+    -fx-text-main: #fbf1c7;
+    -fx-text-danger: #fb4934;
+    -fx-text-datasheet: #8ec07c;
+    -fx-text-hover-color: #282828;
+
+    -fx-button-main: #3c3836;
+    -fx-button-hover-main: #504945;
+    -fx-button-hover-danger: #fb4934;
+    -fx-button-hover-datasheet: #8ec07c;
+
+    -fx-scroll-button: #fabd2f;
+
+    -fx-bg: #1d2021;
+    -fx-bg2: #3c3836;
+    -fx-bg3: #282828;
+}
+
+.button-classic {
+    -fx-background-color: -fx-button-main;
+    -fx-border-color: -fx-button-main;
+    -fx-background-radius: 3px;
+    -fx-border-radius: 3px;
+    -fx-background-insets: 5 2 5 2;
+    -fx-border-insets: 5 2 5 2;
+
+    -fx-font-family: "Fira Sans";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+
+    transition: -fx-background-color 0.2s, -fx-border-color;
+}
+
+.button-classic:hover {
+    -fx-background-color: -fx-button-hover-main;
+    -fx-border-color: -fx-button-hover-main;
+}
+
+.button-datasheet {
+    -fx-background-color: -fx-button-main;
+    -fx-border-color: -fx-button-main;
+    -fx-background-radius: 3px;
+    -fx-border-radius: 3px;
+    -fx-background-insets: 5 2 5 2;
+    -fx-border-insets: 5 2 5 2;
+
+    -fx-text-fill: -fx-text-datasheet;
+
+    transition: -fx-background-color 0.2s, -fx-text-fill 0.2s, -fx-border-color 0.2s;
+}
+
+.button-datasheet:hover {
+    -fx-background-color: -fx-button-hover-datasheet;
+    -fx-border-color: -fx-button-hover-datasheet;
+    -fx-text-fill: -fx-text-hover-color;
+}
+
+.button-emoji {
+    -fx-background-color: -fx-button-main;
+    -fx-border-color: -fx-button-main;
+    -fx-background-radius: 3px;
+    -fx-border-radius: 3px;
+    -fx-background-insets: 5 2 5 2;
+    -fx-border-insets: 5 2 5 2;
+
+    -fx-font-family: "Noto Emoji";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+
+    transition: -fx-background-color 0.2s, -fx-border-color 0.2s;
+}
+
+.button-emoji:hover {
+    -fx-background-color: -fx-button-hover-main;
+    -fx-border-color: -fx-button-hover-main;
+}
+
+.label-search {
+    -fx-background-color: -fx-bg;
+
+    -fx-font-family: "Fira Sans";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.label-search-emoji {
+    -fx-background-color: -fx-bg;
+
+    -fx-font-family: "Noto Emoji";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.label-head {
+    -fx-font-family: "Science Gothic";
+    -fx-font-size: 48px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.label-handwrite {
+    -fx-font-family: "Lora";
+    -fx-font-size: 24px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.label-browser {
+    -fx-font-family: "IBM Plex Serif";
+    -fx-font-size: 18px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.label-popup-element {
+    -fx-font-family: "Fira Sans";
+    -fx-font-size: 18px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.text-field {
+    -fx-background-color: #282828;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 3 0 3 0;
+    -fx-border-color: #282828;
+    -fx-border-radius: 5px;
+    -fx-border-insets: 3 0 3 0;
+
+    -fx-font-family: "Fira Sans";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+}
+
+.separator-classic .line {
+    -fx-background-color: -fx-bg2;
+    -fx-border-color: -fx-bg2;
+
+}
+
+.panel-classic {
+    -fx-background-color: -fx-bg;
+    -fx-border-color: -fx-bg;
+}
+
+.panel-classic:selected {
+    -fx-background-color: -fx-bg;
+    -fx-border-color: -fx-bg;
+}
+
+.text-for-flow-classic {
+    -fx-font-family: "IBM Plex Serif";
+    -fx-font-size: 18px;
+    -fx-fill: -fx-text-main;
+}
+
+.list-cell {
+    -fx-background-color: -fx-bg;
+    -fx-background-insets: 0 0 5 0;
+    -fx-background-radius: 6px;
+
+    -fx-border-color: -fx-bg;
+    -fx-border-insets: 0 0 5 0;
+    -fx-border-radius: 6px;
+
+    transition: -fx-background-color 0.2s, -fx-border-color 0.2s;
+}
+
+.list-cell .label {
+    -fx-font-family: "Fira Sans";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+    transition: -fx-text-fill 0.2s;
+}
+
+.list-cell .button {
+    -fx-background-color: -fx-button-main;
+    -fx-border-color: -fx-button-main;
+    -fx-background-radius: 3px;
+    -fx-border-radius: 3px;
+
+    -fx-text-fill: -fx-text-danger;
+
+    transition: -fx-background-color 0.2s, -fx-text-fill 0.2s, -fx-border-color 0.2s;
+}
+
+.list-cell .button:hover {
+    -fx-background-color: -fx-button-hover-danger;
+    -fx-border-color: -fx-button-hover-danger;
+    -fx-text-fill: -fx-text-hover-color;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #458588;
+    -fx-border-color: #458588;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #83a598;
+    -fx-border-color: #83a598;
+}
+
+.list-cell:filled:hover .label {
+    -fx-text-fill: -fx-text-hover-color;
+}
+
+.scroll-pane {
+    -fx-background-color: -fx-bg;
+    -fx-region-background: -fx-bg;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.increment-arrow, .decrement-arrow {
+    -fx-background-color: -fx-scroll-button;
+    -fx-border-color: -fx-scroll-button;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0px;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-scroll-button;
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: -fx-bg;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: -fx-bg;
+}
+
+.text-area {
+    -fx-background-color: -fx-bg3;
+    -fx-background-radius: 5px;
+    -fx-border-color: -fx-bg3;
+    -fx-border-radius: 5px;
+
+    -fx-font-family: "Fira Sans";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-main;
+    -fx-display-caret: true;
+}
+
+.text-area .content {
+    -fx-background-color: -fx-bg3;
+    -fx-background-radius: 5px;
+    -fx-border-color: -fx-bg3;
+    -fx-border-radius: 5px;
+}
