@@ -34,6 +34,7 @@ public final class KonturComponentUpdatePopupController {
         this.priceTextField.setText(String.valueOf(component.getPrice()));
         this.quantityTextField.setText(String.valueOf(component.getQuantity()));
         this.boxTextField.setText(component.getBox());
+        this.thumbnailTextField.setText(component.getThumbnail());
         this.datasheetTextField.setText(component.getDatasheet());
         this.descriptionTextField.setText(component.getDescription());
     }
