@@ -1,17 +1,20 @@
-package io.b4siliq.infrastructure.database.enums;
+package io.b4siliq.application.enums;
 
-public enum SearchColumnEnum {
+import io.b4siliq.application.contracts.SearchColumnEnum;
+
+public enum SearchComponentColumnEnum implements SearchColumnEnum {
     Name("name"),
     Specification("specification"),
     Box("box"),
     Favorite("favorite");
 
     private String column;
-    private SearchColumnEnum(String column) {
+    private SearchComponentColumnEnum(String column) {
         this.column = column;
     }
 
-    public SearchColumnEnum next() {
+    @Override
+    public SearchComponentColumnEnum next() {
         var values = values();
         return values[(this.ordinal() + 1) % values.length];
     }
