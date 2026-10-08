@@ -4,9 +4,9 @@ import io.b4siliq.application.dtos.UpdatedComponentDto;
 import io.b4siliq.application.validators.UpdatedComponentDtoValidator;
 import io.b4siliq.presentation.models.ComponentModel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public final class KonturComponentUpdatePopupController {
@@ -18,7 +18,6 @@ public final class KonturComponentUpdatePopupController {
     @FXML private TextField specificationTextField;
     @FXML private TextArea descriptionTextField;
     @FXML private TextField thumbnailTextField;
-    @FXML private Button findThumbnailButton;
 
     private Stage currentStage;
     private String currentComponentId;
@@ -46,6 +45,38 @@ public final class KonturComponentUpdatePopupController {
     private void closePopup() {
         if (this.currentStage != null) {
             this.currentStage.close();
+        }
+    }
+
+    @FXML
+    private void searchThumbnailAction() {
+        var fc = new FileChooser();
+        fc.setTitle("Поиск иконки для компонента");
+
+        fc.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Изображения", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        var selectedFile = fc.showOpenDialog(this.currentStage);
+
+        if (selectedFile != null) {
+            this.thumbnailTextField.setText(selectedFile.getAbsolutePath());
+        }
+    }
+
+    @FXML
+    private void searchDatasheetAction() {
+        var fc = new FileChooser();
+        fc.setTitle("Поиск datasheet документации");
+
+        fc.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Документы", ".txt", "*.pdf", "*.docx", "*.doc")
+        );
+
+        var selectedFile = fc.showOpenDialog(this.currentStage);
+
+        if (selectedFile != null) {
+            this.datasheetTextField.setText(selectedFile.getAbsolutePath());
         }
     }
 

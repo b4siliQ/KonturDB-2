@@ -4,25 +4,27 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.b4siliq.application.enums.SearchComponentColumnEnum;
 import io.b4siliq.application.services.ComponentService;
-import io.b4siliq.infrastructure.database.enums.SearchColumnEnum;
 import io.b4siliq.presentation.models.ComponentModel;
 import io.b4siliq.presentation.models.ListCellModel;
-import io.b4siliq.presentation.utils.FontLoaderUtil;
 import io.b4siliq.presentation.utils.FxmlOrganizerUtil;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -32,33 +34,25 @@ public final class KonturMainController {
     @FXML private Label searchParameterLabel;
     @FXML private TextField searchTextField;
     @FXML private ListView<ComponentModel> componentListView;
-    @FXML private Button searchConfigButton;
-    @FXML private Button addNewComponentButton;
-    @FXML private Button searchButton;
-    @FXML private Button updateComponentButton;
-    @FXML private Button setFavoriteButton;
-    @FXML private Button datasheetButton;
-    @FXML private Label searchLogoLabel;
     @FXML private Label nameLabel;
     @FXML private Label specificationLabel;
     @FXML private Label priceLabel;
     @FXML private Label quantityLabel;
     @FXML private Label boxLabel;
-    @FXML private Label staticPriceLabel;
-    @FXML private Label staticQuantityLabel;
-    @FXML private Label staticBoxLabel;
-    @FXML private Label staticDescriptionLabel;
     @FXML private TextFlow descriptionTextFlow;
     @FXML private ScrollPane browserScrollPane;
+    @FXML private ImageView thumbnailImageView;
 
     private static final Logger logger = LoggerFactory.getLogger(KonturMainController.class);
     private final Text descriptionText = new Text();
     private ComponentService service;
-    private SearchColumnEnum column;
+    private SearchComponentColumnEnum column;
+    private Image defaultThumbnail;
 
     public void preapareController(ComponentService service) {
         this.service = service;
-        this.column = SearchColumnEnum.Name;
+        this.column = SearchComponentColumnEnum.Name;
+        this.defaultThumbnail = this.loadDefaultThumbnail();
 
         this.componentListView.setCellFactory(param -> new ListCellModel(item -> {
             this.service.deleteComponent(UUID.fromString(item.getId())).thenRun(() -> {
@@ -70,8 +64,12 @@ public final class KonturMainController {
             this.componentListView.getItems().remove(item);
         }));
 
+        this.componentListView.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldComponent, newComponent) -> this.updateSelection(oldComponent, newComponent)
+        );
+
         this.service.initializeDB().thenRun(() -> {
-            logger.info("Creating table...");
+            logger.info("Initializing table...");
             this.refreshComponentList();
         });
     }
@@ -109,56 +107,88 @@ public final class KonturMainController {
                 return null;
             });
     }
+
+    private Image loadDefaultThumbnail() {
+        var resource = KonturMainController.class.getResource("/io/b4siliq/styles/KonturDark/images/KonturNull.png");
+        if (resource != null) return new Image(resource.toExternalForm());
+
+        logger.error("An error has occured while loading default component thumbnail");
+        return null;
+    }
+
+    private void updateThumbnail(String path) {
+        if (path != null && !path.isBlank()) {
+            var file = new File(path);
+            if (file.exists()) {
+                this.thumbnailImageView.setImage(new Image(file.toURI().toString()));
+                return;
+            }
+        }
+        this.thumbnailImageView.setImage(defaultThumbnail);
+    }
+
+    private void onThumbnailPathChanged(ObservableValue<? extends String> obs, String oldPath, String newPath) {
+        this.updateThumbnail(newPath);
+    }
+
+    private void bindElements(ComponentModel component) {
+        this.nameLabel.textProperty().bind(component.nameProperty());
+        this.specificationLabel.textProperty().bind(component.specificationProperty());
+        this.priceLabel.textProperty().bind(component.priceProperty().asString());
+        this.quantityLabel.textProperty().bind(component.quantityProperty().asString());
+        this.boxLabel.textProperty().bind(component.boxProperty());
+        this.descriptionText.textProperty().bind(component.descriptionProperty());
+
+        component.thumbnailProperty().addListener(this::onThumbnailPathChanged);
+    }
+
+    private void unbindElements(ComponentModel component) {
+        this.nameLabel.textProperty().unbind();
+        this.specificationLabel.textProperty().unbind();
+        this.priceLabel.textProperty().unbind();
+        this.quantityLabel.textProperty().unbind();
+        this.boxLabel.textProperty().unbind();
+        this.descriptionText.textProperty().unbind();
+
+        component.thumbnailProperty().removeListener(this::onThumbnailPathChanged);
+    }
+
+    private void updateSelection(ComponentModel oldComponent, ComponentModel newComponent) {
+        if (oldComponent != null) {
+            this.unbindElements(oldComponent);
+        }
+
+        if (newComponent == null) {
+            this.browserScrollPane.setVisible(false);
+            return;
+        }
+
+        this.bindElements(newComponent);
+        updateThumbnail(newComponent.getThumbnail());
+        this.browserScrollPane.setVisible(true);
+    }
     @FXML
     private void initialize() {
-        var emojiFont = FontLoaderUtil.loadFont(KonturMainController.class, "NotoEmoji.ttf", 13);
-        var headFont = FontLoaderUtil.loadFont(KonturMainController.class, "ScienceGothic.ttf", 48);
-        var handwriteFont = FontLoaderUtil.loadFont(KonturMainController.class, "LoraItalic.ttf", 24);
-        var browserFont = FontLoaderUtil.loadFont(KonturMainController.class, "IBMPlexSerif.ttf", 18);
-        var elementFont = FontLoaderUtil.loadFont(KonturMainController.class, "FiraSans.ttf", 13);
-
-        this.nameLabel.setFont(headFont);
-        this.specificationLabel.setFont(handwriteFont);
-        this.priceLabel.setFont(browserFont);
-        this.quantityLabel.setFont(browserFont);
-        this.boxLabel.setFont(browserFont);
-        this.descriptionText.setFont(browserFont);
-
-        this.staticPriceLabel.setFont(browserFont);
-        this.staticQuantityLabel.setFont(browserFont);
-        this.staticBoxLabel.setFont(browserFont);
-        this.staticDescriptionLabel.setFont(browserFont);
-
-        this.searchParameterLabel.setFont(elementFont);
-        this.datasheetButton.setFont(elementFont);
-        this.searchTextField.setFont(elementFont);
-
-        this.searchLogoLabel.setFont(emojiFont);
-        this.searchConfigButton.setFont(emojiFont);
-        this.searchButton.setFont(emojiFont);
-        this.addNewComponentButton.setFont(emojiFont);
-        this.setFavoriteButton.setFont(emojiFont);
-        this.updateComponentButton.setFont(emojiFont);
-
+        this.descriptionText.getStyleClass().add("text-for-flow-classic");
         this.descriptionTextFlow.getChildren().add(this.descriptionText);
     }
 
     @FXML
     private void openSearchConfigurationPopupAction() {
         switch(this.column) {
-            case SearchColumnEnum.Favorite -> {
+            case SearchComponentColumnEnum.Favorite -> {
                 this.searchParameterLabel.setText("Компоненты: По Имени");
                 this.column = this.column.next();
             }
-            case SearchColumnEnum.Name -> {
+            case SearchComponentColumnEnum.Name -> {
                 this.searchParameterLabel.setText("Компоненты: По Типу");
                 this.column = this.column.next();
             }
-            case SearchColumnEnum.Specification -> {
+            case SearchComponentColumnEnum.Specification -> {
                 this.searchParameterLabel.setText("Компоненты: По Ящику");
                 this.column = this.column.next();
             }
-            case SearchColumnEnum.Box -> {
+            case SearchComponentColumnEnum.Box -> {
                 this.searchParameterLabel.setText("Компоненты: Избранное");
                 this.column = this.column.next();
             }
@@ -195,20 +225,6 @@ public final class KonturMainController {
             );
             // Custom ex
         }
-    }
-
-    @FXML
-    private void getComponentCellAction() {
-        var currentComponent = this.componentListView.getSelectionModel().getSelectedItem();
-        if (currentComponent == null) return;
-
-        this.nameLabel.textProperty().bind(currentComponent.nameProperty());
-        this.specificationLabel.textProperty().bind(currentComponent.specificationProperty());
-        this.priceLabel.textProperty().bind(currentComponent.priceProperty().asString());
-        this.quantityLabel.textProperty().bind(currentComponent.quantityProperty().asString());
-        this.boxLabel.textProperty().bind(currentComponent.boxProperty());
-        this.descriptionText.textProperty().bind(currentComponent.descriptionProperty());
-        this.browserScrollPane.setVisible(true);
     }
 
     @FXML
@@ -302,16 +318,35 @@ public final class KonturMainController {
     @FXML
     private void openDatasheetAction() {
         var currentComponent = this.componentListView.getSelectionModel().getSelectedItem();
-        if (currentComponent == null) return;
+        if (currentComponent == null || currentComponent.getDatasheet() == null) return;
 
         var doc = new File(currentComponent.getDatasheet());
-        try {
-            if (doc.exists() && Desktop.isDesktopSupported()) {
+
+        if (!doc.exists()) {
+            logger.error(
+                "An error has occured while opening datasheet:\nCannot find this file {}",
+                currentComponent.getDatasheet()
+            );
+            return;
+        }
+
+        if (!Desktop.isDesktopSupported()) {
+            logger.error(
+                "An error has occured while opening datasheet:\nThis desktop isn't supported"
+            );
+            return;
+        }
+
+        CompletableFuture.runAsync(() -> {
+            try {
                 logger.info("Opening datasheet file");
                 Desktop.getDesktop().open(doc);
+            } catch(Exception e) {
+                logger.error(
+                    "An error has occured while opening datasheet:\nCannot open this file {}",
+                    currentComponent.getDatasheet()
+                );
             }
-        } catch(Exception e) {
-            // Soon
-        }
+        });
     }
 }
