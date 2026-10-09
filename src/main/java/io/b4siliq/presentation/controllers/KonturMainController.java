@@ -206,6 +206,13 @@ public final class KonturMainController {
             popupStage.setScene(new Scene(popupRoot));
             popupController.setStage(popupStage);
 
+            try {
+                var icon = new Image(KonturMainController.class.getResourceAsStream("/io/b4siliq/icons/KDB2Icon.png"));
+                popupStage.getIcons().add(icon);
+            } catch(Exception e) {
+                logger.error("Cannot load icon from resource:\n{}", e);
+            }
+
             popupStage.setResizable(false);
             popupStage.setTitle("Регистратор нового компонента");
             popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -284,6 +291,13 @@ public final class KonturMainController {
             popupStage.setScene(new Scene(popupRoot));
             popupController.setStage(popupStage);
             popupController.initPopup(currentComponent);
+
+            try {
+                var icon = new Image(KonturMainController.class.getResourceAsStream("/io/b4siliq/icons/KDB2Icon.png"));
+                popupStage.getIcons().add(icon);
+            } catch(Exception e) {
+                logger.error("Cannot load icon from resource:\n{}", e);
+            }
 
             popupStage.setResizable(false);
             popupStage.setTitle("Редактор компонента");

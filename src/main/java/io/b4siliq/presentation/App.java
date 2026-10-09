@@ -3,6 +3,7 @@ package io.b4siliq.presentation;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +32,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        try {
+            var icon = new Image(App.class.getResourceAsStream("/io/b4siliq/icons/KDB2Icon.png"));
+            stage.getIcons().add(icon);
+        } catch(Exception e) {
+            logger.error("Cannot load icon from resources:\n{}", e);
+        }
+
         try {
             var db = DatabaseFactory.createDatabase("sqlite");
             executor = Executors.newFixedThreadPool(2);
