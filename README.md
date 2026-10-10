@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/home/b4siliQ/Codespaces/Java/konturdb2/src/main/resources/io/b4siliq/icons/KDB2Icon.png" alt="KDB2" width="128" height="128">
+  <img src="src/main/resources/io/b4siliq/icons/KDB2Icon.png" alt="KDB2" width="128" height="128">
   <h1 align="center">KonturDB 2</h1>
   <p align="center">
     Приложение для удобного хранения информации об электронных радиокомпонентах.
