@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 import io.b4siliq.presentation.controllers.KonturListCellController;
-import io.b4siliq.presentation.utils.FxmlOrganizerUtil;
+import io.b4siliq.presentation.utils.FXOrganizerUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 
@@ -27,7 +27,7 @@ public class ListCellModel extends ListCell<ComponentModel> {
         } else {
             if (this.loader == null) {
                 try {
-                    this.loader = FxmlOrganizerUtil.getLoader(ListCellModel.class, "KonturListCell.fxml");
+                    this.loader = FXOrganizerUtil.getLoader(ListCellModel.class, "KonturListCell.fxml");
                     this.loader.load();
                     controller = loader.getController();
                 } catch(IOException e) {

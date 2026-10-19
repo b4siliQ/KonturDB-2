@@ -3,7 +3,6 @@ package io.b4siliq.presentation;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import io.b4siliq.application.services.ComponentService;
 import io.b4siliq.infrastructure.database.factories.DatabaseFactory;
 import io.b4siliq.infrastructure.database.repositories.ComponentRepository;
 import io.b4siliq.presentation.controllers.KonturMainController;
-import io.b4siliq.presentation.utils.FxmlOrganizerUtil;
+import io.b4siliq.presentation.utils.FXOrganizerUtil;
 
 /**
  * JavaFX App
@@ -32,12 +31,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        try {
-            var icon = new Image(App.class.getResourceAsStream("/io/b4siliq/icons/KDB2Icon.png"));
-            stage.getIcons().add(icon);
-        } catch(Exception e) {
-            logger.error("Cannot load icon from resources:\n{}", e);
-        }
+        FXOrganizerUtil.setIcon(stage, "KDB2Icon.png");
 
         try {
             var db = DatabaseFactory.createDatabase("sqlite");
@@ -52,7 +46,7 @@ public class App extends Application {
             throw new RuntimeException("Failed to initialize processes", e);
         }
 
-        var mainSceneLoader = FxmlOrganizerUtil.getLoader(App.class, "KonturMain.fxml");
+        var mainSceneLoader = FXOrganizerUtil.getLoader(App.class, "KonturMain.fxml");
         Parent root = mainSceneLoader.load();
         KonturMainController mainSceneController = mainSceneLoader.getController();
 

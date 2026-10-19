@@ -1,6 +1,6 @@
 package io.b4siliq.presentation.models;
 
-import io.b4siliq.application.dtos.UpdatedComponentDto;
+import io.b4siliq.application.contracts.UpdatedComponentDto;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;

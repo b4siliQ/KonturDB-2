@@ -8,9 +8,9 @@ import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.b4siliq.application.contracts.NewComponentDto;
 import io.b4siliq.application.contracts.SearchColumnEnum;
-import io.b4siliq.application.dtos.NewComponentDto;
-import io.b4siliq.application.dtos.UpdatedComponentDto;
+import io.b4siliq.application.contracts.UpdatedComponentDto;
 import io.b4siliq.domain.entities.Component;
 import io.b4siliq.infrastructure.database.abstracts.GenericRepository;
 import io.b4siliq.infrastructure.database.contracts.DatabaseConnector;

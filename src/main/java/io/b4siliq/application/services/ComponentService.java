@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-import io.b4siliq.application.dtos.NewComponentDto;
-import io.b4siliq.application.dtos.UpdatedComponentDto;
+import io.b4siliq.application.contracts.NewComponentDto;
+import io.b4siliq.application.contracts.UpdatedComponentDto;
 import io.b4siliq.application.enums.SearchComponentColumnEnum;
 import io.b4siliq.application.validators.ComponentDtoValidator;
 import io.b4siliq.application.validators.ComponentValidator;

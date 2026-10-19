@@ -1,6 +1,6 @@
 package io.b4siliq.presentation.controllers;
 
-import io.b4siliq.application.dtos.NewComponentDto;
+import io.b4siliq.application.contracts.NewComponentDto;
 import io.b4siliq.application.validators.ComponentDtoValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
