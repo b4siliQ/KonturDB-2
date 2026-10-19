@@ -1,4 +1,4 @@
-package io.b4siliq.application.dtos;
+package io.b4siliq.application.contracts;
 
 public record UpdatedComponentDto(
     String id,
