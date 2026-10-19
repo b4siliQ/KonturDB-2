@@ -1,6 +1,6 @@
 package io.b4siliq.application.validators;
 
-import io.b4siliq.application.dtos.UpdatedComponentDto;
+import io.b4siliq.application.contracts.UpdatedComponentDto;
 
 public final class UpdatedComponentDtoValidator {
     private UpdatedComponentDtoValidator() {

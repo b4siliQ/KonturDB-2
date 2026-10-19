@@ -1,6 +1,6 @@
 package io.b4siliq.presentation.controllers;
 
-import io.b4siliq.application.dtos.UpdatedComponentDto;
+import io.b4siliq.application.contracts.UpdatedComponentDto;
 import io.b4siliq.application.validators.UpdatedComponentDtoValidator;
 import io.b4siliq.presentation.models.ComponentModel;
 import javafx.fxml.FXML;
