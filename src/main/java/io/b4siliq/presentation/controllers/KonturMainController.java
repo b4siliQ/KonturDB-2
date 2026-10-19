@@ -13,12 +13,11 @@ import io.b4siliq.application.enums.SearchComponentColumnEnum;
 import io.b4siliq.application.services.ComponentService;
 import io.b4siliq.presentation.models.ComponentModel;
 import io.b4siliq.presentation.models.ListCellModel;
-import io.b4siliq.presentation.utils.FxmlOrganizerUtil;
+import io.b4siliq.presentation.models.ManagedPopupModel;
+import io.b4siliq.presentation.utils.FXOrganizerUtil;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -27,8 +26,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public final class KonturMainController {
     @FXML private Label searchParameterLabel;
@@ -198,27 +195,19 @@ public final class KonturMainController {
     @FXML
     private void addNewComponentAction() {
         try {
-            var loader = FxmlOrganizerUtil.getLoader(KonturMainController.class, "KonturComponentPopup.fxml");
-            Parent popupRoot = loader.load();
-            KonturComponentPopupController popupController = loader.getController();
+            var loader = FXOrganizerUtil.getLoader(
+                KonturMainController.class,
+                "KonturComponentPopup.fxml"
+            );
+            var popup = new ManagedPopupModel<KonturComponentPopupController>(
+                "Регистратор нового компонента",
+                false,
+                loader
+            );
+            popup.getPopupController().setStage(popup.getPopupStage());
+            popup.showPopup();
 
-            var popupStage = new Stage();
-            popupStage.setScene(new Scene(popupRoot));
-            popupController.setStage(popupStage);
-
-            try {
-                var icon = new Image(KonturMainController.class.getResourceAsStream("/io/b4siliq/icons/KDB2Icon.png"));
-                popupStage.getIcons().add(icon);
-            } catch(Exception e) {
-                logger.error("Cannot load icon from resource:\n{}", e);
-            }
-
-            popupStage.setResizable(false);
-            popupStage.setTitle("Регистратор нового компонента");
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.showAndWait();
-
-            var result = popupController.getResult();
+            var result = popup.getPopupController().getResult();
             if (result != null) {
                 this.service.createNewComponent(result).thenRun(() -> {
                     logger.info("Creating new component from dto");
@@ -226,11 +215,7 @@ public final class KonturMainController {
                 });
             }
         } catch(IOException e) {
-            logger.error(
-                "An error has occured while creating new component",
-                e.getMessage()
-            );
-            // Custom ex
+            logger.error("An error has occured while creating new component", e);
         }
     }
 
@@ -280,31 +265,20 @@ public final class KonturMainController {
         if (currentComponent == null) return;
 
         try {
-            var loader = FxmlOrganizerUtil.getLoader(
+            var loader = FXOrganizerUtil.getLoader(
                 KonturMainController.class,
                 "KonturComponentUpdatePopup.fxml"
             );
-            Parent popupRoot = loader.load();
-            KonturComponentUpdatePopupController popupController = loader.getController();
+            var popup = new ManagedPopupModel<KonturComponentUpdatePopupController>(
+                "Редактор компонента",
+                false,
+                loader
+            );
+            popup.getPopupController().setStage(popup.getPopupStage());
+            popup.getPopupController().initPopup(currentComponent);
+            popup.showPopup();
 
-            var popupStage = new Stage();
-            popupStage.setScene(new Scene(popupRoot));
-            popupController.setStage(popupStage);
-            popupController.initPopup(currentComponent);
-
-            try {
-                var icon = new Image(KonturMainController.class.getResourceAsStream("/io/b4siliq/icons/KDB2Icon.png"));
-                popupStage.getIcons().add(icon);
-            } catch(Exception e) {
-                logger.error("Cannot load icon from resource:\n{}", e);
-            }
-
-            popupStage.setResizable(false);
-            popupStage.setTitle("Редактор компонента");
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.showAndWait();
-
-            var result = popupController.getComponent();
+            var result = popup.getPopupController().getComponent();
             if (result != null) {
                 this.service.updateComponent(result).thenRun(() -> {
                     logger.info("Redacting component by dto");
@@ -314,10 +288,7 @@ public final class KonturMainController {
                 });
             }
         } catch(IOException e) {
-            logger.error(
-                "An error has occured while redacting component",
-                e.getMessage()
-            );
+            logger.error("An error has occured while redacting component", e);
         }
     }
 
