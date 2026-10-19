@@ -100,6 +100,11 @@
     -fx-border-color: -fx-button-hover-main;
 }
 
+.tooltip {
+    -fx-font-smoothing-type: gray;
+    -fx-font-family: "Fira Sans"
+}
+
 .label-search {
     -fx-background-color: -fx-bg;
 
